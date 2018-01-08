@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Symfony 3.4</title>
+</head>
+<body>
+    <h1>Symfony 3.4 - Twig</h1>
+    {{ dump(list) }}
+    <ul>
+        {% for key, value in list %}
+        <li>{{ key ~ ' : ' ~ value }}</li>
+        {% endfor %}
+    </ul>
+
+    {#
+        lien :
+            -fonctions :
+                url : lien absolu
+                path :  lien relatif
+                -cibler le nom unique des routes créé dans l'annotation @Route("", name='')
+
+    #}
+    <a href="{{ path("default.index") }}">Retour à l'accueil</a>
+
+    {% set prenom = 'kha  dar' %}
+
+    {% set now = date('now') %}
+
+    <p>{{ prenom | upper }}</p>
+
+    <p>{{ prenom | length }}</p>
+
+    <p>{{ now | date }}</p>
+
+
+    <p>{{ "now" | date_modify("-3 year") | date("d/m/Y") }}</p>
+
+    <ul>
+        {% for i in 0..10 %}
+            <li>l'indice est {{ i }}</li>
+        {% endfor %}
+    </ul>
+    {% if prenom == 'khadar' %}
+        <p>ok</p>
+        {% else %}
+        <p>pas ok</p>
+    {% endif %}
+
+
+    {# app:  accès auw infos de l'application #}
+
+    {{ dump(app.request.headers.get('host')) }}
+
+    {# appel d'une fonction personnalisée #}
+
+    {{ my_test() }}
+
+
+    {% set postDate = date('2016-09-13') %}
+
+    {% set dateDiff = date_diff(postDate) %}
+
+    <p>il y a {{ dateDiff.year }} an(s) {{ dateDiff.month }} mois {{ dateDiff.day }} jour(s) {{ dateDiff.hour }} heure(s) et {{ dateDiff.min }} minute(s)</p>
+
+    {% set motTranslate = "お早うございます" %}
+
+    <p>{{ motTranslate | slugify }}</p>
+</body>
+</html>

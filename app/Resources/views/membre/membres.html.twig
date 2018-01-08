@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %} Template Twig/Bootstrap  {% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12" style="margin-top: 20px;">
+                <h1>Members</h1>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Image</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th></th>
+                    </tr>
+
+                    {% for key, value in membres %}
+                    <tr>
+                            <td><img src="http://lorempixel.com/200/200/people/{{key + 1}}" class="img-responsive img-circle" /></td>
+                        <td class="td">{{value.firstname }}</td>
+                        <td class="td">{{ value.lastname }}</td>
+                        <td class="td"><a href="{{ path("membre.membre", {'id' : key})}}" class="btn btn-primary">Details</a></td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.2.1.slim.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+</body>
+</html>
+
+{% block stylesheets %}
+<style>
+    img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%
+    }
+    td.td {
+        padding-top: 45px;
+    }
+</style>
+{% endblock %}

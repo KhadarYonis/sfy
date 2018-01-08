@@ -1,0 +1,55 @@
+{# extends héritage d'un template parent #}
+{% extends 'parent.html.twig' %}
+
+{% block main %}
+    <div class="col-sm-8 main">
+        <br>
+        main
+
+        {% block form %} {% endblock %}
+        <br>
+        <a href="{{ url('default.index') }}">acceuil</a>
+        <br>
+        Cibler le route avec params : <a href="{{ url('default.hello', {'firstname' : 'khadar'}) }}">Allez hello/qqch</a>
+    </div>
+{% endblock %}
+
+{% block aside %}
+    <div class="col-sm-4 aside">
+        <br>
+        aside
+        <br>
+        Google analytic : {{ codeGA }} <br>
+        Key FB : {{ keyFB }}
+    </div>
+{% endblock %}
+
+{% block title %}
+    {# poarent : récuperation du contenu du bloc parent#}
+       {{ parent() }} - Mise en page
+{% endblock %}
+
+
+{% block stylesheets %}
+    <style>
+    .header {
+        height: 100px;
+        border: 1px solid #0000F0;
+        margin-bottom: 10px;
+    }
+
+    .main {
+        height: 500px;
+        border: 1px solid #f0231f;
+    }
+    .aside {
+        height: 500px;
+        border: 1px solid #f01cc3;
+    }
+    .footer {
+        height: 100px;
+        border: 1px solid #0000F0;
+        margin-top: 10px;
+    }
+    </style>
+{% endblock %}

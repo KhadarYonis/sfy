@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %} Template Twig/Bootstrap  {% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    {% block stylesheets %}
+        <style>
+
+            img {
+                width: 115px;
+                height: 115px;
+                border-radius: 50%;
+                margin-right: 10px;
+            }
+
+        </style>
+    {% endblock %}
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12" style="margin-top: 20px;">
+                <h1>Member{{ id + 1}} id</h1>
+                <div class="row">
+
+
+                    <div class="col-xs-2">
+                        <img src="http://lorempixel.com/200/200/people/{{ id + 1 }}" class="img-responsive img-circle" />
+                    </div>
+                    <div class="col-xs-10">
+                        <p><strong class="text-uppercase">First name :</strong> {{ membre.firstname }}</p>
+                        <p><strong class="text-uppercase">Last name :</strong> {{ membre.lastname }}</p>
+                        <p><strong class="text-uppercase">Email :</strong> <a href="mailto:member1@contact.com">member{{ id + 1 }}@contact.com</a></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <a href="#" class="btn btn-primary" style="margin-top: 20px;">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.2.1.slim.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+</body>
+</html>
