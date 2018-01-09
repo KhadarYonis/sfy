@@ -14,8 +14,34 @@ namespace AppBundle\Twig;
     *
  */
 
+use AppBundle\Entity\Formation;
+use Doctrine\Common\Persistence\ManagerRegistry;
+
 class AppExtension extends \Twig_Extension
 {
+
+    /*
+     * injection de services dans une classe autre qu'un contrôleur
+     *  créer une propriéte par service
+     *  injecter les services par le constructeur
+     */
+
+    private $doctrine;
+    private $twig;
+
+    public function __construct(ManagerRegistry $doctrine, \Twig_Environment $twig)
+    {
+        $this->doctrine = $doctrine;
+        $this->twig = $twig;
+
+
+    }
+
+
+    /*
+    * CREATION FONCTION
+    */
+
 
     /*
      * création d'une fonction
@@ -31,7 +57,8 @@ class AppExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFunction('my_test', [$this, 'mytest']),
-            new \Twig_SimpleFunction('date_diff', [$this, 'dateDiff'])
+            new \Twig_SimpleFunction('date_diff', [$this, 'dateDiff']),
+            new \Twig_SimpleFunction('render_menu', [$this, 'create_menu'])
         ];
     }
 
@@ -55,6 +82,25 @@ class AppExtension extends \Twig_Extension
         ];
     }
 
+    public function create_menu()
+    {
+        //requête avec le service doctrine
+
+        $rc = $this->doctrine->getRepository(Formation::class);
+        $formations = $rc->findAll();
+
+        // envoie des resultats à une vue partielle
+
+        return $this->twig->render('inc/menu.html.twig', [
+            'formations' => $formations
+        ]);
+
+    }
+
+
+   /*
+    * CREATION FILTER
+    */
     public function getFilters()
     {
         return [

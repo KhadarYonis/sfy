@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+        {{ render_menu() | raw }}
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="jumbotron">
+                    <h1>{{ formation.name }}</h1>
+                    <p>{{ formation.description }}</p>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+
+                <h2>List of modules</h2>
+                <ul class="list-group">
+                     {% for module in formation.modules %}
+                        <li class="list-group-item"><a href="{{ url('formation.module',  {'id' : module.id}) }}">{{ module.name }}</a></li>
+                     {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+{% endblock %}

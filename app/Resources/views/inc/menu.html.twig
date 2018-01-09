@@ -1,0 +1,12 @@
+
+<div class="row">
+    <div class="col">
+        <ul class="nav nav-pills">
+            {% for formation in formations %}
+                <li style="padding: 10px 20px 10px 0">
+                    <a href="{{ url('formation.formation',  {'id' : formation.id}) }}" class="nav-item">{{ formation.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
