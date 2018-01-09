@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Country
+ * Language
  *
- * @ORM\Table(name="country")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CountryRepository")
+ * @ORM\Table(name="language")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\LanguageRepository")
  */
-class Country
+class Language
 {
     /**
      * @var int
@@ -24,9 +24,15 @@ class Country
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=100, unique=true)
+     * @ORM\Column(name="name", type="string", length=50)
      */
     private $name;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Contact", mappedBy="languages")
+     */
+    private $contacts;
+
 
 
     /**
@@ -44,7 +50,7 @@ class Country
      *
      * @param string $name
      *
-     * @return Country
+     * @return Language
      */
     public function setName($name)
     {
@@ -63,3 +69,4 @@ class Country
         return $this->name;
     }
 }
+

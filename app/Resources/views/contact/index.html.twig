@@ -18,6 +18,8 @@
             <th>Prénom</th>
             <th>Nom</th>
             <th>E-mail</th>
+            <th>Pays</th>
+            <th>Langue</th>
             <th>Message</th>
             <th>Modifier</th>
             <th>Supprimer</th>
@@ -30,6 +32,17 @@
             <td>{{ result.firstname }}</td>
             <td>{{ result.lastname }}</td>
             <td>{{ result.email }}</td>
+            <td>{{ result.country ? result.country.name : 'Non défini' }}</td>
+
+            <td>
+                {% if result.languages | length > 0%}
+                    {% for langue in result.languages %}
+                        {{ langue.name }}
+                    {% endfor %}
+                {% else %}
+                    Inconnu
+                {% endif %}
+            </td>
             <td>{{ result.message }}</td>
             <th>
                 <a href="{{ url('contact.form.update', {'id' : result.id}) }}" class="btn btn-primary">Modifier</a>

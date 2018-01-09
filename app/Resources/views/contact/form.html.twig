@@ -36,7 +36,21 @@
                 <p>
                     {{ form_label(form.message, 'Message :') }}
                     {{ form_widget(form.message) }}
+                    {{ form_errors(form.message) }}
                 </p>
+
+                <p>
+                    {{ form_label(form.country, 'Pays :') }}
+                    {{ form_widget(form.country) }}
+                    {{ form_errors(form.country) }}
+                </p>
+
+                <p>
+                    {{ form_label(form.languages, 'Langue :') }}
+                    {{ form_widget(form.languages) }}
+                    {{ form_errors(form.languages) }}
+                </p>
+
                 <p>
                     <input type="submit" name="submit" value="Valider" class="btn btn-info">
                 </p>
