@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\Contact;
 
 /**
  * ContactRepository
@@ -10,5 +11,138 @@ namespace AppBundle\Repository;
  */
 class ContactRepository extends \Doctrine\ORM\EntityRepository
 {
+    /*
+     * Requêtes personnalisées
+     *      le choix  de classe repository équivant à la commande FROM
+     *      doit retourner les résultats de la requête
+     *
+     *  createQueryBuilder : méthode pour créer une requête Doctrine Query Language
+     *  choix d'un alias de l'entité en cours
+     *
+     *   NB : alias e.g : SELECT firstname AS fn FROM contact c
+     *
+     *  getQuery : exécuter la requếte ; avant-dernière méthode
+     *
+     *  récupérer les résultats : dernière méthode à utiliser:
+     *      - getResult() : array d'entité (avec relation entre entités)
+     *      - getArrayResult() : array array (sans relation entre entités c-a-d on voit pas les propriétes qui détermine la relation)
+     *      - getOneOrNullResult() /getSingleResult() : un seul résultat
+     *
+     *
+     *  setParameter('paramFirstname', 'firstname')
+     *
+     *          setParameters([
+                    'paramFirstname' => 'firstname'
+                ])
 
+
+     *  commandes sql :
+     *
+     *      - select() : utilisation de l'alias
+     *      - where() : condition
+     *          - première condition doit utiliser where()
+     *          - à partir de la deuxième condition : utiliser andWhere() ou orWhere()
+     *          - utiliser des paramètres de requête / setParameters permet d'assigner une valeur aux paramètres
+     *
+     *       - join() :
+     *          - cibler les propriétés relationnelles des entités
+     *          - choix d'un alias de l'entié jointe
+     *       - having() :  condition sur un regroupement
+     *       - orderBy() :  order
+     *       - setMaxResults(10) : LIMIT, limitaion des résultats
+     *       - setFirstResults(100) : OFFSET  je veux 10 resultats à partir de 100 ème
+     *
+     */
+
+    public function testQuery()
+    {
+
+        // sql native
+
+        /**
+         * $q = $this->getEntityManager()->getConnection()->query("SELECT * FROM contact WHERE  firstname = 'firstname'");
+
+        $q->execute();
+
+        $r = $q->fetchAll();
+
+        dump($r); exit;
+        **/
+
+
+        $results = $this->createQueryBuilder('contact')
+
+            /*->select('contact.firstname, contact.lastname')
+            ->where('contact.firstname LIKE :paramLike')
+            ->andWhere('contact.lastname = :paramLastname')
+            ->setParameters([
+                'paramLastname' => 'lastname 1',
+                'paramLike' => '%10%'
+            ])
+
+
+            // JOIN
+            ->select("contact.lastname, GROUP_CONCAT(languages.name SEPARATOR ' | ' ) AS language, country.name")
+            ->join('contact.languages', 'languages')
+            ->join('contact.country', 'country')
+            ->where('country.name LIKE :paramLike')
+            ->setParameters([
+                'paramLike' => '%10%'
+            ])
+            ->groupBy('contact.lastname, country.name')
+            ->setMaxResults(3)
+            */
+            ->select('contact.email, COUNT(languages.id) AS result')
+            ->join('contact.languages', 'languages')
+            ->groupBy('contact.email')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $results;
+    }
+
+    public function testUpdate()
+    {
+        /*
+         * retour de la requête :  nombre de ligne modifiées
+         */
+
+        $result = $this->getEntityManager()->createQueryBuilder()
+            ->update(Contact::class, 'contact')
+            ->set('contact.firstname', ':paramFirstname')
+            ->where('contact.id = :paramId')
+            ->setParameters([
+                'paramFirstname' => 'titi',
+                'paramId' =>  65
+            ])
+            ->getQuery()
+            ->execute()
+        ;
+
+        return $result;
+
+    }
+
+
+    public function testDelete()
+    {
+        /*
+         * retour de la requête :  nombre de ligne modifiées
+         */
+
+        $result = $this->getEntityManager()->createQueryBuilder()
+            ->delete(Contact::class, 'contact')
+            ->where('contact.id = :paramId')
+            ->setParameters([
+
+                'paramId' =>  65
+            ])
+            ->getQuery()
+            ->execute()
+        ;
+
+        return $result;
+
+    }
 }
