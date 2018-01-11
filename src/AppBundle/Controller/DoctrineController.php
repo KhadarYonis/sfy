@@ -10,6 +10,8 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Contact;
+use AppBundle\Entity\Film;
+use AppBundle\Entity\Realisateur;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -31,4 +33,22 @@ class DoctrineController extends Controller
 
         dump($results); exit();
     }
+
+    /**
+     * @Route("/movies", name="doctrine.movies")
+     *
+     */
+
+    public function moviesAction(ManagerRegistry $doctrine)
+    {
+
+        // on recupérer l'entité (que on souhait affiché ) puis le méthode associé dans Repository
+        $results = $doctrine->getRepository(Film::class)->moviesQuery();
+        //$results = $doctrine->getRepository(Realisateur::class)->directorsQuery();
+
+        dump($results); exit();
+    }
+
+
+
 }

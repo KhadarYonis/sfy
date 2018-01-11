@@ -1,0 +1,29 @@
+{% include "base.html.twig" %}
+
+{% block body %}
+    <div class="container">
+        <h1>{{ 'title' | trans( {}, 'admin') }} i18n</h1>
+        {#
+            accéder à la locale : app.request.locale
+            filter trans : permet  de cibler une clé de traduction
+                par défaut : recherche dans le domaine "messages"
+                1er param : texte de remplacement
+                2ème param : domaine (par defaut "message")
+        #}
+
+        <p>{{ 'content.text' | trans }}</p>
+        <p>{{ app.request.locale }}</p>
+        <button>{{ 'content.buttons.submit' | trans | capitalize }}</button>
+        <p>
+            {{ 'content.remplacement' | trans({'%name%' : 'Dupont'}) }}
+        </p>
+
+        <time>
+            {{ now | localizeddate }}
+        </time>
+
+        <p>
+            {{ 9000 | localizednumber('spellout') }}
+        </p>
+    </div>
+{% endblock %}
